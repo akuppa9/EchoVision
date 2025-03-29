@@ -1,12 +1,14 @@
+import os
 import requests
+from dotenv import load_dotenv
 
-google_maps_api_key = "YOUR_GOOGLE_MAPS_API_KEY"
+load_dotenv()
+
+google_maps_api_key = os.getenv("GOOGLE_MAPS_API_KEY")
 class Actions:
     
-    def __init__(self, google_maps_api_key, OpenAI_API_key):
-
-        self.google_maps_api_key = google_maps_api_key
-        self.OpenAI_API_key = OpenAI_API_key
+    def __init__(self):
+        pass
         
     def get_current_location():
         url = f"https://www.googleapis.com/geolocation/v1/geolocate?key={google_maps_api_key}"
@@ -37,10 +39,3 @@ class Actions:
                 raise Exception(f"Google Maps API error: {data.get('status')} - {error_message}")
         else:
             raise Exception(f"HTTP error: {response.status_code} - {response.text}")
-
-    def determine_action_chain(prompt):
-        pass
-
-    def image_api(images, text_prompt):
-        pass
-
