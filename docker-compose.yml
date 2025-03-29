@@ -10,6 +10,8 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - FLASK_ENV=development
+    env_file:
+      - .env
     volumes:
       - .:/app
     restart: unless-stopped
