@@ -3,6 +3,8 @@ import multiprocessing as mp
 import cv2
 import time
 import numpy as np
+from test_chain import test_chain
+from host.transcription import transcribe_with_elevenlabs
 
 def camera_process(buffer):
     print("Camera process started")
@@ -24,10 +26,15 @@ def camera_process(buffer):
 def agent_process(buffer):
     print("Agent process started")
     while True:
+        
         # Retrieve the base64-encoded images from the buffer
         images = buffer.get_images()
+        query = [transcribe_with_elevenlabs("temp_audio.wav")]
+       
+    
         # print(f"Agent sees {images} frames in the buffer.")
-
+        test_chain(images, query)
+        
         # You can process or send these images somewhere else here.
         # For this example, we’ll just wait a short time and loop.
         time.sleep(2)

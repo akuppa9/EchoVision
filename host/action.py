@@ -2,6 +2,9 @@ import os
 import time
 import requests
 from dotenv import load_dotenv
+from elevenlabs.client import ElevenLabs
+from elevenlabs import play
+import os
 
 # from elevenlabs.client import ElevenLabs
 # from elevenlabs import play
@@ -16,7 +19,20 @@ ELEVENLABS_API_KEY = "sk_d7df5f33f81a50ff1e55513a56afbf681a59d8a96bc2587c"
 class Action:
     
     def __init__(self):
+        self.client = ElevenLabs(
+            api_key=os.getenv("ELEVEL_LABS_API_KEY"),
+        )
         pass
+
+    def tts(self, text):
+        audio = self.client.text_to_speech.convert(
+            text=text,
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            model_id="eleven_multilingual_v2",
+            output_format="mp3_44100_128",
+        )
+
+        play(audio)
         
     def get_current_location(self):
         url = f"https://www.googleapis.com/geolocation/v1/geolocate?key={google_maps_api_key}"
@@ -68,6 +84,8 @@ class Action:
                     #duration = step["duration"]["text"]
                     
                     print(instruction)
+
+                    self.tts(instruction)
                     
                     #call audio function
                     instructions_list.append(instruction)
