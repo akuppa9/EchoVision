@@ -29,12 +29,14 @@ class Action:
 
     def get_route_to_destination(self, origin, destination):
         process = multiprocessing.Process(
-            target=self.get_route_to_destination, 
+            target=self.get_route_to_destination_async, 
             args=(origin, destination)
         )
         process.start()
+        print("test")
 
     def get_route_to_destination_async(self,origin, destination):
+        print("started")
         mode = "walking"
         url = "https://maps.googleapis.com/maps/api/directions/json"
         params = {
