@@ -5,7 +5,7 @@ import time
 
 def camera_process(buffer):
     print("Camera process started")
-    cap = cv2.VideoCapture('http://localhost:8080')  # Adjust URL to your MJPEG endpoint
+    cap = cv2.VideoCapture('http://172.20.10.10:81/stream')  # Adjust URL to your MJPEG endpoint
 
     if not cap.isOpened():
         print("Error: Unable to open MJPEG stream.")
@@ -19,10 +19,11 @@ def camera_process(buffer):
         
         # Add the new frame to the buffer
         buffer.add(frame)
+        print("frame added")
 
 def agent_process(buffer):
     print("Agent process started")
-    while True:
+    while False:
         # Retrieve the base64-encoded images from the buffer
         images = buffer.get_images()
         print(f"Agent sees {len(images)} frames in the buffer.")
