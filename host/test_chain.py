@@ -8,11 +8,11 @@ the chain-of-thought reasoning and action execution.
 import os
 import time
 import re
-from host.transcription import transcribe_with_elevenlabs
+from transcription import transcribe_with_elevenlabs
 import json
-from host.reasoning import reasoning
+from reasoning import reasoning
 from dotenv import load_dotenv
-from host.action import Action
+from action import Action
 
 
 def test_chain(images, query):
@@ -813,20 +813,17 @@ def test_chain(images, query):
 
     def main():
         # Check if the test image exists
-        if not os.path.exists(image):
-            print(f"ERROR: Image {image} not found")
-            return
-            
-        
-        
+        for image in images:
+            if not os.path.exists(image):
+                print(f"ERROR: Image {image} not found")
+                return
         # Process each query
         for test_query in query:
             print("\n" + "="*70)
-            print(f"TESTING QUERY: {test_query}")
             print("="*70)
             
         
-            result = process_query([test_image], test_query)
+            result = process_query(images, test_query)
             
         
             if result:
@@ -844,3 +841,4 @@ def test_chain(images, query):
 
     if __name__ == "__main__":
         main() 
+test_chain(["../CodeSignal_Score.png"], ["tell me where to find the nearest park"])

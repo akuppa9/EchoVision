@@ -14,7 +14,6 @@ import multiprocessing
 load_dotenv()
 
 google_maps_api_key = os.getenv("GOOGLE_MAPS_API_KEY")
-ELEVENLABS_API_KEY = "sk_d7df5f33f81a50ff1e55513a56afbf681a59d8a96bc2587c"
 #ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")
 class Action:
     
@@ -28,7 +27,7 @@ class Action:
         audio = self.client.text_to_speech.convert(
             text=text,
             voice_id="JBFqnCBsd6RMkjVDRZzb",
-            model_id="eleven_multilingual_v2",
+            model_id="eleven_flash_v2_5",
             output_format="mp3_44100_128",
         )
 
@@ -44,15 +43,7 @@ class Action:
         else:
             raise Exception(f"Error: {response.status_code} - {response.text}")
 
-    def get_route_to_destination(self, origin, destination):
-        process = multiprocessing.Process(
-            target=self.get_route_to_destination_async, 
-            args=(origin, destination)
-        )
-        process.start()
-        print("test")
-
-    def get_route_to_destination_async(self,origin, destination):
+    def get_route_to_destination(self,origin, destination):
         print("started")
         mode = "walking"
         url = "https://maps.googleapis.com/maps/api/directions/json"

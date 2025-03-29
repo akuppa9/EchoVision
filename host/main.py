@@ -4,7 +4,7 @@ import cv2
 import time
 import numpy as np
 from test_chain import test_chain
-from host.transcription import transcribe_with_elevenlabs
+from transcription import transcribe_with_elevenlabs
 
 def camera_process(buffer):
     print("Camera process started")
@@ -29,9 +29,9 @@ def agent_process(buffer):
         
         # Retrieve the base64-encoded images from the buffer
         images = buffer.get_images()
-        query = [transcribe_with_elevenlabs("temp_audio.wav")]
+        query = [transcribe_with_elevenlabs("../Park.wav")]
        
-    
+        print(f"Agent sees {images} frames in the buffer.")
         # print(f"Agent sees {images} frames in the buffer.")
         test_chain(images, query)
         

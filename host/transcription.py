@@ -1,5 +1,5 @@
 import os
-import speech_recognition as sr
+# import speech_recognition as sr
 import requests
 from dotenv import load_dotenv
 
@@ -34,31 +34,32 @@ def transcribe_with_elevenlabs(audio_file_path):
     return result.get("text", None)
 
 def main():
-    recognizer = sr.Recognizer()
-    microphone = sr.Microphone()
+    pass
+#     recognizer = sr.Recognizer()
+#     microphone = sr.Microphone()
 
-    # Calibrate microphone to ambient noise.
-    print("Calibrating microphone for ambient noise. Please wait...")
-    with microphone as source:
-        recognizer.adjust_for_ambient_noise(source, duration=2)
-    print("Calibration complete. Start speaking now.")
+#     # Calibrate microphone to ambient noise.
+#     print("Calibrating microphone for ambient noise. Please wait...")
+#     with microphone as source:
+#         recognizer.adjust_for_ambient_noise(source, duration=2)
+#     print("Calibration complete. Start speaking now.")
 
-    while True:
-        with microphone as source:
-            print("Listening...")
-            audio = recognizer.listen(source)
+#     while True:
+#         with microphone as source:
+#             print("Listening...")
+#             audio = recognizer.listen(source)
 
-        # Save the recorded audio to a temporary WAV file.
-        audio_file_path = "temp_audio.wav"
-        with open(audio_file_path, "wb") as f:
-            f.write(audio.get_wav_data())
+#         # Save the recorded audio to a temporary WAV file.
+#         audio_file_path = "temp_audio.wav"
+#         with open(audio_file_path, "wb") as f:
+#             f.write(audio.get_wav_data())
 
-        # Transcribe the audio using Eleven Labs' transcription endpoint.
-        transcription = transcribe_with_elevenlabs(audio_file_path)
-        if transcription:
-            print("Transcribed Text:", transcription)
-        else:
-            print("Could not transcribe the audio.")
+#         # Transcribe the audio using Eleven Labs' transcription endpoint.
+#         transcription = transcribe_with_elevenlabs(audio_file_path)
+#         if transcription:
+#             print("Transcribed Text:", transcription)
+#         else:
+#             print("Could not transcribe the audio.")
 
 if __name__ == "__main__":
     main()

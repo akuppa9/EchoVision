@@ -112,8 +112,8 @@ def reasoning(images, query, param_for_next_action=""):
     response = client.chat.completions.create(
         model="gpt-4o-mini",  
         messages=messages,
-        max_tokens=1000,       # Allow for longer responses for detailed reasoning
-        temperature=0.2        # Lower temperature for more deterministic responses
+        max_tokens=1000,       
+        temperature=0.2      
     )
     
     # The full response body contains:
