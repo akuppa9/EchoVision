@@ -8,6 +8,7 @@ the chain-of-thought reasoning and action execution.
 import os
 import time
 import re
+from transcription import transcribe_with_elevenlabs
 import json
 from reasoning import reasoning
 from dotenv import load_dotenv
@@ -817,9 +818,10 @@ def main():
         print(f"ERROR: Test image {test_image} not found")
         return
         
+    transcription = transcribe_with_elevenlabs("temp_audio.wav")
     # Test both location-based and image analysis queries
     test_queries = [
-        "find me the nearest park"
+        transcription
     ]
     
     # Process each query
