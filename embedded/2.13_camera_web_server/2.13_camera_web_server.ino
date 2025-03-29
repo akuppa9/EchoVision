@@ -7,8 +7,8 @@
 
 
 #include "camera_pins.h"
-const char* ssid = "bb fone";
-const char* password = "12345678";
+const char* ssid = "Eashan’s iPhone";
+const char* password = "Eashan83";
 void startCameraServer();
 void setupLedFlash(int pin);
 
