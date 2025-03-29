@@ -46,7 +46,7 @@ def reasoning(images, query, param_for_next_action=""):
                             - Function: get_nearby_places(location, type, radius=5000)
                             Parameters:
                               - location: string (GPS coordinates or address)
-                              - type: string (place type, e.g., 'restaurant', 'gas_station', 'hospital')
+                              - type: string (place type, e.g., 'restaurant', 'gas_station', 'hospital', 'store', 'park', 'cafe', 'bank', 'atm', 'pharmacy', 'lodging')
                               - radius: integer (optional, search radius in meters, default 5000)
                             Use when the user asks about finding nearby locations of a specific type
 
@@ -58,15 +58,33 @@ def reasoning(images, query, param_for_next_action=""):
                             If this is the start of a new query, determine the full action chain needed and specify the first action to take.
                             If this is a continuation (param_for_next_action is not empty), use that parameter for the next action in the chain.
 
-                            Examples:
-                            - For 'give me directions to chipotle', the chain would be:
+                            Examples of different action chains for different contexts:
+                            
+                            - For 'give me directions to the nearest restaurant', the chain would be:
                               1. get_current_location() -> returns coordinates
-                              2. get_nearby_places(coordinates, 'restaurant') -> returns chipotle address, not coordinates
-                              3. get_route_to_destination(coordinates, chipotle_address)
+                              2. get_nearby_places(coordinates, 'restaurant') -> returns restaurant address
+                              3. get_route_to_destination(coordinates, restaurant_address)
 
-                            - For 'what is the closest gas station', the chain would be:
+                            - For 'find the nearest gas station', the chain would be:
                               1. get_current_location() -> returns coordinates
                               2. get_nearby_places(coordinates, 'gas_station')
+
+                            - For 'directions to the nearest park', the chain would be:
+                              1. get_current_location() -> returns coordinates
+                              2. get_nearby_places(coordinates, 'park') -> returns park address
+                              3. get_route_to_destination(coordinates, park_address)
+
+                            - For 'where is the closest hospital', the chain would be:
+                              1. get_current_location() -> returns coordinates
+                              2. get_nearby_places(coordinates, 'hospital')
+                              
+                            IMPORTANT: Be sure to follow the specified format strictly and specify the parameters clearly.
+                            
+                            For get_nearby_places, always include the place type based on what the user is looking for.
+                            For get_route_to_destination, always include both origin and destination parameters.
+                            
+                            If you've already obtained coordinates from get_current_location, use these coordinates directly in the next function call.
+                            If you've already obtained a destination address from get_nearby_places, use this address directly in the next function call.
 
                             Provide your response in this format:
                             Action Chain: [List the full sequence of actions needed, or specify if only image analysis is needed]
@@ -80,13 +98,16 @@ def reasoning(images, query, param_for_next_action=""):
         }
     ]
     for image_path in images:
-        base64_image = get_image_base64(image_path)
-        messages[0]["content"].append({
-            "type": "image_url",
-            "image_url": {
-                "url": f"data:image/png;base64,{base64_image}"
-            }
-        })
+        try:
+            base64_image = get_image_base64(image_path)
+            messages[0]["content"].append({
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:image/png;base64,{base64_image}"
+                }
+            })
+        except Exception as e:
+            print(f"Error processing image {image_path}: {e}")
     
     response = client.chat.completions.create(
         model="gpt-4o-mini",  
@@ -113,5 +134,6 @@ def reasoning(images, query, param_for_next_action=""):
     
     return response.choices[0].message.content
 
-# Test with a local image
-print(reasoning(["Codesignal_Score.png"], "tell me the nearest walmart store", "coordinates: 40.0061° N, 83.0283° W"))
+# Uncomment to test locally
+# if __name__ == "__main__":
+#     print(reasoning(["Codesignal_Score.png"], "find me nearby parks", ""))
