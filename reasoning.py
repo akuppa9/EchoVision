@@ -35,7 +35,7 @@ def reasoning(images, query, param_for_next_action=""):
                             Use when you need the user's current position for other actions
 
                             2. Get route to destination
-                            - Function: get_route_to_destination(origin, destination)
+                            - Function: get_route_to_destination(origin, destination, mode="walking")
                             Parameters:
                               - origin: string (GPS coordinates or address)
                               - destination: string (address or place name)
@@ -91,6 +91,8 @@ def reasoning(images, query, param_for_next_action=""):
     response = client.chat.completions.create(
         model="gpt-4o-mini",  
         messages=messages,
+        max_tokens=1000,       # Allow for longer responses for detailed reasoning
+        temperature=0.2        # Lower temperature for more deterministic responses
     )
     
     # The full response body contains:
