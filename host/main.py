@@ -1,11 +1,12 @@
-from buffer import Buffer
+from buffer import Buffer, create_manager
 import multiprocessing as mp
 import cv2
 import time
+import numpy as np
 
 def camera_process(buffer):
     print("Camera process started")
-    cap = cv2.VideoCapture('http://172.20.10.10:81/stream')  # Adjust URL to your MJPEG endpoint
+    cap = cv2.VideoCapture('http://172.20.10.3:81/stream')  # Adjust URL to your MJPEG endpoint
 
     if not cap.isOpened():
         print("Error: Unable to open MJPEG stream.")
@@ -19,22 +20,22 @@ def camera_process(buffer):
         
         # Add the new frame to the buffer
         buffer.add(frame)
-        print("frame added")
 
 def agent_process(buffer):
     print("Agent process started")
-    while False:
+    while True:
         # Retrieve the base64-encoded images from the buffer
         images = buffer.get_images()
-        print(f"Agent sees {len(images)} frames in the buffer.")
+        # print(f"Agent sees {images} frames in the buffer.")
 
         # You can process or send these images somewhere else here.
         # For this example, we’ll just wait a short time and loop.
         time.sleep(2)
 
 def main():
+    manager = create_manager()
     # Create a Buffer that holds a maximum of 5 frames.
-    buffer = Buffer(capacity=5)
+    buffer = Buffer(capacity=5, manager=manager)
 
     # Pass the same buffer instance to both processes.
     camera = mp.Process(target=camera_process, args=(buffer,))
@@ -52,16 +53,6 @@ def main():
         agent.terminate()
         camera.join()
         agent.join()
-
-
-# check for trigger to start whole chain process
-# get query from transcribed speech
-# get images from buffer
-# pass images, query, param_for_next_action (empty string) into reasoning
-# get response from reasoning (next step in chain)
-# pass response into action
-# get action response
-# put into reasoning
 
 if __name__ == "__main__":
     main()

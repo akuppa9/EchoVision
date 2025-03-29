@@ -2,8 +2,9 @@ import os
 import time
 import requests
 from dotenv import load_dotenv
-from elevenlabs.client import ElevenLabs
-from elevenlabs import play
+
+# from elevenlabs.client import ElevenLabs
+# from elevenlabs import play
 import re
 import multiprocessing
 
@@ -71,6 +72,7 @@ class Action:
                     #call audio function
                     instructions_list.append(instruction)
                     duration_seconds = step["duration"]["value"]
+                    print(duration_seconds)
                     time.sleep(duration_seconds)
                 
                 return instructions_list
@@ -81,7 +83,7 @@ class Action:
         else:
             raise Exception(f"HTTP error: {response.status_code} - {response.text}")
         
-    def get_nearby_places(self, location, place_type, radius=1000, audio=True):
+    def get_nearby_places(self, location, place_type, radius=1000):
 
         url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
         # Convert tuple to string if necessary
@@ -102,9 +104,6 @@ class Action:
             if data.get("status") == "OK":
                 for place in data.get("results", []): 
                     print(f"- {place.get('name')} , {place.get('vicinity')}")
-                    if audio:
-                        #call audio
-                        pass
                 return data
             else:
                 error_message = data.get("error_message", "Unknown error")
@@ -132,8 +131,14 @@ if __name__ == "__main__":
 """
     # Test get_route_to_destination
     actions = Action()
-    origin = "1600 Amphitheatre Parkway, Mountain View, CA"
-    destination = "GOCO, 2187 Neil Avenue, Columbus"
+    current_location = actions.get_current_location()
+        # Use current location if available, else use a default location (Mountain View, CA)
+    if current_location:
+        location_str = f"{current_location['lat']},{current_location['lng']}"
+    else:
+        location_str = "37.4220,-122.0841"
+    origin = "2160 N High st, Columbus, OH"
+    destination = "1970 Waldeck Avenue, Columbus"
     try:
         directions = actions.get_route_to_destination(origin, destination)
   
