@@ -6,6 +6,7 @@ WORKDIR /app
 # Install build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file
@@ -37,4 +38,4 @@ COPY . .
 EXPOSE 8000
 
 # Start the application
-CMD ["python", "app.py"] 
+CMD ["python", "main.py"] 

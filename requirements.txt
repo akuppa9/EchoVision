@@ -1,2 +1,7 @@
 numpy==2.2.4
 opencv-python==4.11.0.86
+flask==3.0.2
+gunicorn==21.2.0
+python-dotenv==1.0.1
+requests==2.31.0 
+openai==1.11.0
