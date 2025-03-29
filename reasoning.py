@@ -112,4 +112,4 @@ def reasoning(images, query, param_for_next_action=""):
     return response.choices[0].message.content
 
 # Test with a local image
-print(reasoning(["Codesignal_Score.png"], "tell me the nearest target store", "coordinates: 40.0061° N, 83.0283° W, target address: 1234 Main St, Columbus, OH 43215"))
+print(reasoning(["Codesignal_Score.png"], "tell me the nearest walmart store", "coordinates: 40.0061° N, 83.0283° W"))

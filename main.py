@@ -53,5 +53,15 @@ def main():
         camera.join()
         agent.join()
 
+
+# check for trigger to start whole chain process
+# get query from transcribed speech
+# get images from buffer
+# pass images, query, param_for_next_action (empty string) into reasoning
+# get response from reasoning (next step in chain)
+# pass response into action
+# get action response
+# put into reasoning
+
 if __name__ == "__main__":
     main()
