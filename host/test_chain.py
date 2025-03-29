@@ -832,13 +832,15 @@ def test_chain(images, query):
                 print(f"Query: {test_query}")
                 if "image_analysis" in result.get("action_history", [{}])[0].get("action_type", ""):
                     print(f"Action type: Image Analysis")
+                    print(f"Final result: {result['final_result']}")
+                    actions.tts(result['final_result'])
                 else:
                     print(f"Detected place type: {result['context_params'].get('place_type', 'unknown')}")
-                print(f"Final result: {result['final_result']}")
+                    print(f"Final result: {result['final_result']}")
                 print("="*70)
             
             time.sleep(1)  
 
     if __name__ == "__main__":
         main() 
-test_chain(["../CodeSignal_Score.png"], ["tell me where to find the nearest park"])
+test_chain(["../CodeSignal_Score.png"], ["explain my codesignal"])
