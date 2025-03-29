@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-def reasoning(state, query, long_term):
+def reasoning(images, query, long_term):
     client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
     
     # Create messages array with images and prompt
@@ -19,14 +19,33 @@ def reasoning(state, query, long_term):
             "content": [
                 {
                     "type": "text",
-                    "text": "query",
+                    "text": 
+                            """You are an AI assistant helping a user navigate and understand their environment. Based on the provided images, user query, and historical successful interactions, determine the most appropriate action sequence to take.
+
+                            Here are the possible actions:
+                            1. Get current location + Get route to destination: 
+                            Use when the user asks for directions or how to get somewhere specific
+                            2. Get current location + Get nearby places: 
+                            Use when the user asks about finding nearby locations of a specific type (restaurants, gas stations, etc.)
+                            3. Image analysis and description:
+                            Use when the user asks about their surroundings or needs information from the visual context
+
+                            Historical successful interactions:
+                            """ + long_term + """
+
+                            Analyze the user's query, image context, and historical successful interactions carefully. Use the historical data to inform your action sequence selection and ensure high-quality responses. If the query involves navigation or finding places, specify which API actions should be called and in what order. If the query requires visual analysis, provide a detailed response based on the image content.
+
+                            Provide your response in this format:
+                            Action Sequence: [List the specific API calls needed, if any]
+                            Reasoning: [Explain why this action sequence was chosen, referencing relevant historical successes if applicable]
+                            Response: [The information to relay to the user]
+
+                            User Query: """ + query
                 }
             ]
         }
     ]
     
-    # Add images to the content array
-    images = state['images']
     for image in images:
         messages[0]["content"].append({
             "type": "image_url",
