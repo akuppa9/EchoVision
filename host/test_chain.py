@@ -19,6 +19,7 @@ def test_chain(images, query):
     load_dotenv()
 
     actions = Action()
+    print("Inside testcahin")
 
     def execute_action(action_info, restaurant_address=None):
         if action_info["action_type"] == "image_analysis":
@@ -716,10 +717,11 @@ def test_chain(images, query):
         return response
 
     def main():
-        for image in images:
-            if not os.path.exists(image):
-                print(f"ERROR: Image {image} not found")
-                return
+        print("mAin")
+        # for image in images:
+        #     if not os.path.exists(image):
+        #         print(f"ERROR: Image {image} not found")
+        #         return
         for test_query in query:
             print("\n" + "="*70)
             print("="*70)
@@ -743,5 +745,5 @@ def test_chain(images, query):
             
             time.sleep(1)  
 
-    if __name__ == "__main__":
-        main() 
+    main() 
+# test_chain(["test_image.png"], ["what are my surroundings?"])

@@ -31,10 +31,9 @@ def agent_process(buffer):
         images = buffer.get_images()
         query = [transcribe_with_elevenlabs("../Park.wav")]
        
-        print(f"Agent sees {images} frames in the buffer.")
+        #print(f"Agent sees {images} frames in the buffer.")
         # print(f"Agent sees {images} frames in the buffer.")
-        test_chain(images, query)
-        
+        test_chain(images, ["explain my surroundings"] )
         # You can process or send these images somewhere else here.
         # For this example, we’ll just wait a short time and loop.
         time.sleep(2)

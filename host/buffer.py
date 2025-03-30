@@ -42,7 +42,7 @@ class Buffer:
             frames = [self.queue[i] for i in range(n)]
             for frame in frames:
                 # Encode the frame as JPEG.
-                ret, buffer_img = cv2.imencode('.jpg', frame)
+                ret, buffer_img = cv2.imencode('.jpeg', frame)
                 if not ret:
                     continue
                 # Convert JPEG bytes to a base64 string.

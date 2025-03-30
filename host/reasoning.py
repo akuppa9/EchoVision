@@ -95,17 +95,16 @@ def reasoning(images, query, param_for_next_action=""):
             ]
         }
     ]
-    for image_path in images:
+    for base64_image in images:
         try:
-            base64_image = get_image_base64(image_path)
             messages[0]["content"].append({
                 "type": "image_url",
                 "image_url": {
-                    "url": f"data:image/png;base64,{base64_image}"
+                    "url": f"data:image/jpeg;base64,{base64_image}"
                 }
             })
         except Exception as e:
-            print(f"Error processing image {image_path}: {e}")
+            print(f"Error processing image {base64_image}: {e}")
     
     response = client.chat.completions.create(
         model="gpt-4o-mini",  
