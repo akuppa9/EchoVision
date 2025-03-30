@@ -49,10 +49,12 @@ The system supports several action types:
    pip install openai python-dotenv opencv-python SpeechRecognition
    ```
 
-2. Create a `.env` file with your OpenAI API key:
+2. Create a `.env` file with your API keys:
 
    ```
    OPENAI_API_KEY=your_api_key_here
+   GOOGLE_MAPS_API_KEY=your_api_key_here
+   ELEVEN_LABS_API_KEY=your_api_key_here
    ```
 
 3. Run the application:
