@@ -53,7 +53,7 @@ def agent_process(buffer):
         
             #print(f"Agent sees {images} frames in the buffer.")
             # print(f"Agent sees {images} frames in the buffer.")
-            test_chain(images, ["explain my surroundings"] )
+            test_chain(images, query )
             # You can process or send these images somewhere else here.
             # For this example, we’ll just wait a short time and loop.
             time.sleep(2)
