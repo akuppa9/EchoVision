@@ -7,7 +7,6 @@ import os
 from dotenv import load_dotenv
 import base64
 
-# Load environment variables
 load_dotenv()
 
 def get_image_base64(image_path):
@@ -17,7 +16,6 @@ def get_image_base64(image_path):
 def reasoning(images, query, param_for_next_action=""):
     client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
     
-    # Create messages array with images and prompt
     messages = [
         {
             "role": "user",
@@ -115,25 +113,5 @@ def reasoning(images, query, param_for_next_action=""):
         max_tokens=1000,       
         temperature=0.2      
     )
-    
-    # The full response body contains:
-    # - id: The unique identifier for the completion
-    # - object: The type of object (chat.completion)
-    # - created: Unix timestamp of when the completion was created
-    # - model: The model used for the completion
-    # - choices: Array of completion choices, each containing:
-    #   - index: The index of the choice
-    #   - message: The message object containing:
-    #     - role: The role of the message (assistant/user)
-    #     - content: The content of the message
-    #   - finish_reason: The reason why the completion finished
-    # - usage: Object containing:
-    #   - prompt_tokens: Number of tokens in the prompt
-    #   - completion_tokens: Number of tokens in the completion
-    #   - total_tokens: Total number of tokens used
-    
+  
     return response.choices[0].message.content
-
-# Uncomment to test locally
-# if __name__ == "__main__":
-#     print(reasoning(["Codesignal_Score.png"], "find me nearby parks", ""))
