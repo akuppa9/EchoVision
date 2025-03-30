@@ -108,7 +108,7 @@ def test_chain(images, query):
             parameters_lines = []
             analysis_content = []
             
-            if "image analysis is needed" in response.lower() or "analysis:" in response.lower():
+            if "image Analysis is needed" in response.lower() or "analysis:" in response.lower():
                 analysis_mode = False
                 for line in lines:
                     if line.strip().startswith("Analysis:") or "##" in line and "Analysis" in line:
@@ -382,7 +382,7 @@ def test_chain(images, query):
         is_image_analysis = any(keyword in query_lower for keyword in [
             "analyz", "describ", "explain", "tell me about", "what is", "what's in", 
             "show me", "identify", "recognize", "interpret", "read", "tell me what", 
-            "scan", "look at", "examine", "codesignal, surrounding"
+            "scan", "look at", "examine", "codesignal"," surrounding"
         ])
         
         if is_image_analysis:

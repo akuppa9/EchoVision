@@ -12,6 +12,7 @@ import soundfile as sf
 
 def record_audio(filename, duration=3, fs=44100):
     print("Recording for", duration, "seconds...")
+    sd.default.device = (0, None)
     recording = sd.rec(int(duration * fs), samplerate=fs, channels=2)
     sd.wait()
     try:
@@ -54,10 +55,6 @@ def agent_process(buffer):
             #print(f"Agent sees {images} frames in the buffer.")
             # print(f"Agent sees {images} frames in the buffer.")
             test_chain(images, query )
-            # You can process or send these images somewhere else here.
-            # For this example, we’ll just wait a short time and loop.
-            time.sleep(2)
-            break
         # change polling rate right now is polling once every second
         time.sleep(1)
 
